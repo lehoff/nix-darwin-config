@@ -1,10 +1,30 @@
 { pkgs, ... }:
 
 {
+    time.timeZone = "Europe/Copenhagen";
+
     # List packages installed in system profile.
     environment.systemPackages = with pkgs; [
         vim
         ripgrep
+        nix-search
+        plantuml
+        stockfish
+        geckodriver
+        wget
+        gtypist
+        mas
+        docker
+        karabiner-elements
+        iterm2
+        skim
+        dash
+        logseq
+        inkscape
+        gimp
+        chromedriver
+        maccy
+        openssl
     ];
 
     # Necessary for using flakes on this system.
