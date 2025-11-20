@@ -55,3 +55,11 @@ nix-store --gc
 # Delete old profile generations (optional, but good practice)
 nix-collect-garbage -d
 ```
+
+Update the unstable channel:
+```
+nix flake update nixpkgs-unstable
+```
+
+## Zed
+Remember to run `cli: install binary` inside Zed after each update.

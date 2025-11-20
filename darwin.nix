@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, inputs, ... }:
 
 {
     # List packages installed in system profile. To search by name, run:
@@ -88,4 +88,21 @@
                 ToogleTrack = 1291898086;
             };
         };
+
+    # Add an overlay to pull packages from unstable
+    nixpkgs.overlays = [
+    (final: prev: {
+      # 1. Define the unstable package set using the passed 'inputs'
+      unstablePkgs = import inputs.nixpkgs-unstable {
+        # Use the system architecture defined by nix-darwin
+        system = final.stdenv.system; 
+      };
+
+      # 2. Reference zed-editor from the unstable package set
+      zed-editor = final.unstablePkgs.zed-editor;
+    })
+  ];
+
+    # This is needed to pass the unstablePkgs set into the overlay function
+    nixpkgs.config.allowUnfree = true; # Necessary if zed-editor is unfree
 }

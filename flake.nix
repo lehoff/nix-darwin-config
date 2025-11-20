@@ -13,6 +13,10 @@
     #home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nix-darwin/nixpkgs";
 
+
+    # adding unstable to get newer versions of, eg, zed-editor
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     # from https://github.com/zhaofengli/nix-homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
@@ -30,11 +34,14 @@
   };
 
   outputs = inputs@{
-    self, nix-darwin, nixpkgs, home-manager, nix-homebrew, homebrew-core, homebrew-cask, ...
+    self, nix-darwin, nixpkgs, home-manager, nixpkgs-unstable, nix-homebrew, homebrew-core, homebrew-cask, ...
     }:
   let
     configuration = import ./configuration.nix;
     darwinConfig = import ./darwin.nix;
+    unstablePkgs = import inputs.nixpkgs-unstable {
+        system = "aarch64-darwin"; # Use your actual system architecture
+      };
   in
   {
     # Build darwin flake using:
@@ -48,54 +55,6 @@
           home-manager.useUserPackages = true;
           home-manager.users.lehoff = import ./home.nix;
         }
-        # from https://github.com/zhaofengli/nix-homebrew (A. New Installation)
-        # nix-homebrew.darwinModules.nix-homebrew
-        # {
-        #   nix-homebrew = {
-        #     # Install Homebrew under the default prefix
-        #     enable = true;
-        #     #autoMigrate = true; # could not deal with taps.
-
-        #     # Apple Silicon Only: Also install Homebrew under the default Intel prefix for Rosetta 2
-        #     enableRosetta = true;
-
-        #     # User owning the Homebrew prefix
-        #     user = "lehoff";
-
-        #     # Optional: Declarative tap management
-        #     taps = {
-        #       "homebrew/homebrew-core" = homebrew-core;
-        #       "homebrew/homebrew-cask" = homebrew-cask;
-        #     };
-
-        #     # Optional: Enable fully-declarative tap management
-        #     #
-        #     # With mutableTaps disabled, taps can no longer be added imperatively with `brew tap`.
-        #     mutableTaps = false;
-
-        #     #packages = {
-        #       brews = [ "openssl" "d2" "cloc" "podman" "docker" ];
-        #       casks = [
-        #           "bettertouchtool" "controlplane" "sigmaos" "firefox"
-        #           "qmk-toolbox" "ukelele" "browserosaurus" "fork"
-        #           "google-drive" "telegram" "whatsapp" "zoom"
-        #           "aldente" "google-chrome" "chromedriver" "raycast"
-        #           "chromium"
-        #         ];
-        #       masApps = {
-        #           Amphetamine = 937984704;
-        #           Pages = 409201541;
-        #           Keynote = 409183694;
-        #           Numbers = 409203825;
-        #           Slack = 803453959;
-        #           Bitwarden = 1352778147;
-        #           Bear = 1091189122;
-        #           ToogleTrack = 1291898086;
-        #         };
-        #         #};
-
-        #   };
-        #}
         ];
       specialArgs = { inherit inputs; };
     };

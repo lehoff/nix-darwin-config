@@ -72,7 +72,6 @@
         };
 
         initContent = ''
-        PATH=/opt/homebrew/opt/cyrus-sasl/sbin:/Users/lehoff/.cache/rebar3/bin:/opt/homebrew/opt/openssl@1.1/bin:/opt/homebrew/bin:$HOME/.elan/bin:$PATH
         eval "$(fasd --init auto)"
         '';
 
@@ -91,8 +90,18 @@
             # https://mbcodes.hashnode.dev/hugo-and-macos
             HUGO_CACHEDIR= "~/.hugo-cache";
         };
+
     };
 
-
-
+    # Home Manager recommends home.sessionPath for adding directories to the general environment PATH.
+    home.sessionPath = [
+        "$HOME/.nix-profile/bin" # This is the standard HM path, which is set automatically, but harmless to specify
+        "$HOME/.elan/bin"        # Added from your original PATH line
+        "$HOME/.cache/rebar3/bin" # Added from your original PATH line
+        "/opt/homebrew/opt/cyrus-sasl/sbin"
+        "/Users/lehoff/.cache/rebar3/bin"
+        "/opt/homebrew/opt/openssl@1.1/bin"
+        "/opt/homebrew/bin"
+        "$HOME/.elan/bin"
+    ];
 }
