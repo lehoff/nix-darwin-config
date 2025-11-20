@@ -40,56 +40,51 @@
     };
 
 
-
-
-
     homebrew = {
-        enable = true;
-        # onActivation.cleanup = "zap"; # this leads to errors
-        global = {
-            brewfile = true;
-            lockfiles = true;
+            enable = true;
+
+            # Ensure 'user' is set if needed, though often optional if using your main user
+            # user = "lehoff";
+
+            # Using the PLURAL names for the built-in nix-darwin module:
+            brews =
+            [
+                "openssl" # used by erlang for crypto
+                "d2"
+                "cloc"
+                "podman"
+                "docker"
+            ];
+
+            casks =
+            [
+                "bettertouchtool"
+                "controlplane"
+                "sigmaos"
+                "firefox"
+                "qmk-toolbox"
+                "ukelele"
+                "browserosaurus"
+                "fork"
+                "google-drive"
+                "telegram"
+                "whatsapp"
+                "zoom"
+                "aldente"
+                "google-chrome"
+                "chromedriver"
+                "raycast"
+                "chromium"
+            ];
+            masApps = {
+                Amphetamine = 937984704;
+                Pages = 409201541;
+                Keynote = 409183694;
+                Numbers = 409203825;
+                Slack = 803453959;
+                Bitwarden = 1352778147;
+                Bear = 1091189122;
+                ToogleTrack = 1291898086;
+            };
         };
-
-        brews =
-        [
-            "openssl" # used by erlang for crypto
-            "d2"
-            "cloc"
-            "podman"
-            "docker"
-        ];
-
-        casks =
-        [
-            "bettertouchtool"
-            "controlplane"
-            "sigmaos"
-            "firefox"
-            "qmk-toolbox"
-            "ukelele"
-            "browserosaurus"
-            "fork"
-            "google-drive"
-            "telegram"
-            "whatsapp"
-            "zoom"
-            "aldente"
-            "google-chrome"
-            "chromedriver"
-            "raycast"
-            "chromium"
-        ];
-    masApps = {
-        Amphetamine = 937984704;
-        Pages = 409201541;
-        Keynote = 409183694;
-        Numbers = 409203825;
-        Slack = 803453959;
-        Bitwarden = 1352778147;
-        Bear = 1091189122;
-        ToogleTrack = 1291898086;
-    };
-
-    };
 }
