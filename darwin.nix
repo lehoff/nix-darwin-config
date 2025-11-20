@@ -39,24 +39,28 @@
         shell = pkgs.zsh;
     };
 
-    
+
 
 
 
     homebrew = {
-        enable = true;  
+        enable = true;
         # onActivation.cleanup = "zap"; # this leads to errors
         global = {
             brewfile = true;
-            lockfiles = true;  
+            lockfiles = true;
         };
 
-        brews = 
+        brews =
         [
             "openssl" # used by erlang for crypto
+            "d2"
+            "cloc"
+            "podman"
+            "docker"
         ];
 
-        casks = 
+        casks =
         [
             "bettertouchtool"
             "controlplane"
@@ -65,14 +69,16 @@
             "qmk-toolbox"
             "ukelele"
             "browserosaurus"
-            "fork" 
+            "fork"
             "google-drive"
             "telegram"
             "whatsapp"
             "zoom"
             "aldente"
             "google-chrome"
+            "chromedriver"
             "raycast"
+            "chromium"
         ];
     masApps = {
         Amphetamine = 937984704;

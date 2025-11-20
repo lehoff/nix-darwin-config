@@ -40,10 +40,13 @@
         #tor-browser
         #helix
         davmail
+        httpie
+        bat
 
+        libossp_uuid
+        
         #nodePackages.mermaid-cli
         # devops
-        docker
         skaffold
         #terraform
         kind
@@ -65,12 +68,12 @@
         shellAliases = {
             #plantuml = "/etc/profiles/per-user/lehoff/bin/java -Djava.awt.headless=true -jar /opt/homebrew/Cellar/plantuml/1.2024.6/libexec/plantuml.jar";
             log = "/usr/bin/log";
+            #docker = "/opt/homebrew/bin/podman";
         };
 
         initExtra = ''
         PATH=/opt/homebrew/opt/cyrus-sasl/sbin:/Users/lehoff/.cache/rebar3/bin:/opt/homebrew/opt/openssl@1.1/bin:/opt/homebrew/bin:$HOME/.elan/bin:$PATH
         eval "$(fasd --init auto)"
-        . ~/.asdf/plugins/dotnet-core/set-dotnet-home.zsh
         '';
 
         # Review prezto and pure options

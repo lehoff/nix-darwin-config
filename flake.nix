@@ -7,7 +7,7 @@
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
     # from https://davi.sh/til/nix/nix-macos-setup/
     home-manager.url = "github:nix-community/home-manager/release-24.11";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.inputs.nixpkgs.follows = "nix-darwin/nixpkgs";
 
     # from https://github.com/zhaofengli/nix-homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
@@ -25,8 +25,8 @@
 
   };
 
-  outputs = inputs@{ 
-    self, nix-darwin, nixpkgs, home-manager, nix-homebrew, homebrew-core, homebrew-cask, ... 
+  outputs = inputs@{
+    self, nix-darwin, nixpkgs, home-manager, nix-homebrew, homebrew-core, homebrew-cask, ...
     }:
   let
     configuration = import ./configuration.nix;
@@ -36,14 +36,14 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#mimer
     darwinConfigurations."mimer" = nix-darwin.lib.darwinSystem {
-      modules = [ 
-        configuration 
+      modules = [
+        configuration
         darwinConfig
         home-manager.darwinModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.users.lehoff = import ./home.nix;
-        } 
+        }
         # from https://github.com/zhaofengli/nix-homebrew (A. New Installation)
         nix-homebrew.darwinModules.nix-homebrew
         {

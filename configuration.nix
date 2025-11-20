@@ -22,9 +22,10 @@
         logseq
         inkscape
         gimp
-        chromedriver
+        #chromedriver
         maccy
         openssl
+        zed-editor
     ];
 
     # Necessary for using flakes on this system.

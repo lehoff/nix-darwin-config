@@ -26,7 +26,7 @@ nix --extra-experimental-features "nix-command flakes" flake init -t nix-darwin/
 nix --extra-experimental-features "nix-command flakes" run nix-darwin/nix-darwin-24.11#darwin-rebuild -- switch
 ```
 
-Once installed: 
+Once installed:
 
 ```
 darwin-rebuild switch --flake ./\#mimer
@@ -34,9 +34,24 @@ darwin-rebuild switch --flake ./\#mimer
 
 # home-manager
 
-From 
+From
 ```
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.11.tar.gz home-manager
 ```
 
 Then it has to be added to darwin.nix
+
+# Update versions
+
+```
+nix flake update
+```
+
+Might need to do this:
+
+```
+# Delete unreachable paths from the Nix store
+nix-store --gc
+# Delete old profile generations (optional, but good practice)
+nix-collect-garbage -d
+```
