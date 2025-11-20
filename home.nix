@@ -71,7 +71,7 @@
             #docker = "/opt/homebrew/bin/podman";
         };
 
-        initExtra = ''
+        initContent = ''
         PATH=/opt/homebrew/opt/cyrus-sasl/sbin:/Users/lehoff/.cache/rebar3/bin:/opt/homebrew/opt/openssl@1.1/bin:/opt/homebrew/bin:$HOME/.elan/bin:$PATH
         eval "$(fasd --init auto)"
         '';
