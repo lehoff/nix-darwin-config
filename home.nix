@@ -2,15 +2,15 @@
 
 {
 
-    # this is internal compatibility configuration 
+    # this is internal compatibility configuration
     # for home-manager, don't change this!
-    home.stateVersion = "24.11";
+    home.stateVersion = "25.11";
 
 
 
     programs.home-manager.enable = true;
     fonts.fontconfig.enable = true;
-
+#
 
     home.username = "lehoff";  # Replace with your actual username
     home.homeDirectory = "/Users/lehoff";  # Replace with your home directory
@@ -19,7 +19,6 @@
 
     home.packages = with pkgs; [
         fasd
-        davmail
         zsh
         oh-my-zsh
         tree
@@ -44,7 +43,7 @@
         bat
 
         libossp_uuid
-        
+
         #nodePackages.mermaid-cli
         # devops
         skaffold
@@ -56,6 +55,7 @@
 
         fontconfig
 
+        coreutils # for factor
     ];
 
     programs.zsh = {

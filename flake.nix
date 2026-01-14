@@ -2,14 +2,14 @@
   description = "LeHoff's nix-darwin system flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
-    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.05";
+    nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-25.11";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
 
     # from https://davi.sh/til/nix/nix-macos-setup/
-    home-manager.url = "github:nix-community/home-manager/release-25.05";
+    home-manager.url = "github:nix-community/home-manager/release-25.11";
     #home-manager.url = "github:nix-community/home-manager/master";
     home-manager.inputs.nixpkgs.follows = "nix-darwin/nixpkgs";
 
@@ -48,6 +48,43 @@
     # $ darwin-rebuild build --flake .#mimer
     darwinConfigurations."mimer" = nix-darwin.lib.darwinSystem {
       modules = [
+        {
+                  nixpkgs.overlays = [
+                    (final: prev: {
+                      nodejs = prev.nodejs.overrideAttrs (oldAttrs: {
+                        doCheck = false;
+                        checkTarget = "";
+                      });
+                    })
+                  ];
+                }
+        inputs.nix-homebrew.darwinModules.nix-homebrew
+            {
+              nix-homebrew = {
+                enable = true;
+                user = "lehoff";
+                # We will use the system brew to avoid the outdated Nix store version
+                enableRosetta = true;
+              };
+            }
+
+            # 3. Force the environment variable into the activation script
+            {
+              system.activationScripts.preActivation.text = ''
+                export HOMEBREW_SKIP_OR_LATER_CHECK=1
+              '';
+            }
+        # {
+        #       # This forces the variable into the activation script environment
+        #       system.activationScripts.preActivation.text = ''
+        #         export HOMEBREW_SKIP_OR_LATER_CHECK=1
+        #       '';
+
+        #       # This ensures the homebrew bundle command sees it
+        #       home-manager.users.lehoff.home.sessionVariables = {
+        #         HOMEBREW_SKIP_OR_LATER_CHECK = "1";
+        #       };
+        #     }
         configuration
         darwinConfig
         home-manager.darwinModules.home-manager {

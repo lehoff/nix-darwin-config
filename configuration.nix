@@ -21,7 +21,7 @@
         dash
         logseq
         inkscape
-        gimp
+        #gimp # did not work with 25.11 on Tahoe on 2026-01-13
         #chromedriver
         maccy
         openssl

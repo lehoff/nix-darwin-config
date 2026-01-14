@@ -55,6 +55,8 @@
                 "cloc"
                 "podman"
                 "docker"
+                #"email-oauth2-proxy"
+                "docker-credential-helper"
             ];
 
             casks =
@@ -76,6 +78,7 @@
                 "chromedriver"
                 "raycast"
                 "chromium"
+                "dockdoor"
             ];
             masApps = {
                 Amphetamine = 937984704;
@@ -95,7 +98,7 @@
       # 1. Define the unstable package set using the passed 'inputs'
       unstablePkgs = import inputs.nixpkgs-unstable {
         # Use the system architecture defined by nix-darwin
-        system = final.stdenv.system; 
+        system = final.stdenv.system;
       };
 
       # 2. Reference zed-editor from the unstable package set
