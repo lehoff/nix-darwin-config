@@ -29,7 +29,7 @@ nix --extra-experimental-features "nix-command flakes" run nix-darwin/nix-darwin
 Once installed:
 
 ```
-darwin-rebuild switch --flake ./\#mimer
+sudo darwin-rebuild switch --flake ./\#mimer --impure
 ```
 
 # home-manager
