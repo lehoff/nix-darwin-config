@@ -55,6 +55,9 @@
     coreutils # for factor
 
     google-cloud-sdk
+
+    ollama
+
   ];
 
   programs.zsh = {
@@ -102,6 +105,8 @@
       }
     '';
   };
+
+  services.ollama.enable = true;
 
   # Home Manager recommends home.sessionPath for adding directories to the general environment PATH.
   home.sessionPath = [

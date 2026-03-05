@@ -79,6 +79,8 @@
       "chromium"
       "dockdoor"
       "betterdisplay" # allows for fine grained setting of resolution per display
+      "nimble-commander"
+      "macdown-3000"
     ];
     masApps = {
       Amphetamine = 937984704;
