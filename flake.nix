@@ -2,6 +2,7 @@
   description = "LeHoff's nix-darwin system flake";
 
   inputs = {
+    # NixOS release version — update all three lines below when upgrading
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-25.11-darwin";
     #nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -90,6 +91,7 @@
         home-manager.darwinModules.home-manager {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = { inherit unstablePkgs; };
           home-manager.users.lehoff = import ./home.nix;
         }
         ];

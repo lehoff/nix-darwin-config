@@ -41,7 +41,24 @@ nix-channel --add https://github.com/nix-community/home-manager/archive/release-
 
 Then it has to be added to darwin.nix
 
-# Update versions
+# Upgrade to a new NixOS release
+
+When a new NixOS release is available (e.g. 25.11 → 26.05), update the three branch references in `flake.nix`:
+
+```
+nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
+nix-darwin.url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+home-manager.url = "github:nix-community/home-manager/release-26.05";
+```
+
+Then run:
+
+```
+nix flake update
+sudo darwin-rebuild switch --flake .#mimer --impure
+```
+
+# Update versions (within a release)
 
 ```
 nix flake update
