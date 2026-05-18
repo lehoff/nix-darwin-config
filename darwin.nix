@@ -18,6 +18,11 @@
   # Auto upgrade nix package and the daemon service.
   #services.nix-daemon.enable = true;
   #services.karabiner-elements.enable = true;
+  services.yabai = {
+    enable = true;
+    package = pkgs.yabai;
+    enableScriptingAddition = true;
+  };
   nix.package = pkgs.nix;
 
   programs.nix-index.enable = true;
@@ -53,10 +58,14 @@
       "d2"
       "cloc"
       "podman"
+      "podman-compose"
       "docker"
       #"email-oauth2-proxy"
       "docker-credential-helper"
       "gemini-cli"
+      "scc"
+      "languagetool"
+
     ];
 
     casks = [
@@ -77,10 +86,16 @@
       "chromedriver"
       "raycast"
       "chromium"
-      "dockdoor"
       "betterdisplay" # allows for fine grained setting of resolution per display
       "nimble-commander"
       "macdown-3000"
+      "zettlr"
+      "languagetool-desktop"
+      "basictex"
+      "cmux"
+      "rectangle"
+      "anki"
+
     ];
     masApps = {
       Amphetamine = 937984704;
@@ -106,6 +121,24 @@
       # 2. Reference these from the unstable package set
       zed-editor = final.unstablePkgs.zed-editor;
       asdf-vm = final.unstablePkgs.asdf-vm;
+      llm-mux = final.rustPlatform.buildRustPackage rec {
+        pname = "llm-mux";
+        version = "20260408.0.0"; # taken from https://crates.io/crates/llm-mux
+
+        src = final.fetchCrate {
+          inherit pname version;
+          # You can get the hash by running nix-prefetch-url
+          hash = "sha256-4+GucWok/K2HMd3E9Ghk2alE88D5pU+z/hq4+he+VQE="; # intentionally wrong
+        };
+
+        cargoHash = "sha256-H3eCUXPXpuBh4QTyu4ghLAKcDk3WBgWTFnH/u3GDcW0=";
+
+        nativeBuildInputs = [ final.pkg-config ];
+        buildInputs = [ final.openssl ];
+
+        # Disable tests if they require network access (common with LLM tools)
+        doCheck = false;
+      };
     })
   ];
 

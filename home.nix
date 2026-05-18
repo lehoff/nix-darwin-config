@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  unstablePkgs,
+  ...
+}:
 
 {
 
@@ -17,6 +22,10 @@
     fasd
     zsh
     oh-my-zsh
+    eza
+    fd
+    fzf
+    procs
     tree
     yq
     jq
@@ -54,9 +63,15 @@
 
     coreutils # for factor
 
+    skhd # for automation
+    yabai
+
     google-cloud-sdk
 
-    ollama
+    (writeShellScriptBin "installfonts" ''
+      SEARCH_DIR="''${1:-.}"
+      ${fd}/bin/fd -t f -e ttf -e otf . "$SEARCH_DIR" | ${parallel}/bin/parallel --verbose cp {} ~/Library/Fonts/
+    '')
 
   ];
 
@@ -71,6 +86,7 @@
       #plantuml = "/etc/profiles/per-user/lehoff/bin/java -Djava.awt.headless=true -jar /opt/homebrew/Cellar/plantuml/1.2024.6/libexec/plantuml.jar";
       log = "/usr/bin/log";
       #docker = "/opt/homebrew/bin/podman";
+      cp = "/bin/cp";
     };
 
     initContent = ''
@@ -106,7 +122,17 @@
     '';
   };
 
-  services.ollama.enable = true;
+  programs.eza = {
+    enable = true;
+    enableZshIntegration = true; # or enableFishIntegration, etc.
+    icons = "auto";
+    extraOptions = [ "--group-directories-first" ];
+  };
+
+  services.ollama = {
+    enable = true;
+    package = unstablePkgs.ollama;
+  };
 
   # Home Manager recommends home.sessionPath for adding directories to the general environment PATH.
   home.sessionPath = [

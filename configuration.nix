@@ -29,6 +29,8 @@
     zed-editor
     nil # Nix LS
     nixd
+
+    llm-mux
   ];
 
   # Necessary for using flakes on this system.
