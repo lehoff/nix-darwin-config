@@ -26,10 +26,21 @@ nix --extra-experimental-features "nix-command flakes" flake init -t nix-darwin/
 nix --extra-experimental-features "nix-command flakes" run nix-darwin/nix-darwin-24.11#darwin-rebuild -- switch
 ```
 
-Once installed:
+Once installed, use the `rebuild` script in this repo instead of calling `darwin-rebuild` directly:
 
 ```
-sudo darwin-rebuild switch --flake ./\#mimer --impure
+./rebuild
+```
+
+## Why the rebuild script?
+
+The Homebrew tap inputs (`homebrew-core`, `homebrew-cask`) are pinned in `flake.lock`. Homebrew's JSON API format changes over time, and if the pinned tap data gets too far out of date relative to the brew binary, cask installs will silently fail with a cryptic Ruby error (`undefined method 'first' for nil`). There is no pre-flight check that catches this — it only blows up during the actual install.
+
+The `rebuild` script avoids this by refreshing those two inputs before every switch:
+
+```
+nix flake update homebrew-core homebrew-cask nix-darwin
+sudo darwin-rebuild switch --flake .#mimer --impure
 ```
 
 # home-manager
