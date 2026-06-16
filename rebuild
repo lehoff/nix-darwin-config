@@ -1,13 +1,18 @@
 #!/usr/bin/env bash
 set -e
 
-# The Homebrew tap inputs (homebrew-core, homebrew-cask) are pinned in
-# flake.lock. Homebrew's JSON API format changes over time, and if the
-# pinned tap data falls too far behind the brew binary's expectations,
-# cask installs will fail with "undefined method 'first' for nil".
-# Refreshing these two inputs before every rebuild prevents that.
-echo "Updating Homebrew tap inputs..."
-nix flake update homebrew-core homebrew-cask nix-darwin
+# Several Homebrew-related inputs are pinned in flake.lock and must be kept
+# in sync with each other:
+#   - homebrew-core / homebrew-cask: tap data (formula/cask definitions)
+#   - nix-homebrew: provides the brew binary itself
+#   - nix-darwin: nix-darwin module compatibility
+#
+# If any of these drift, installs fail with cryptic Ruby errors like
+# "undefined method 'first' for nil" or "undefined method 'post_install_steps'".
+# There is no pre-flight check — failures only surface during the actual install.
+# Refreshing all four inputs before every rebuild prevents that.
+echo "Updating Homebrew-related flake inputs..."
+nix flake update homebrew-core homebrew-cask nix-darwin nix-homebrew
 
 echo "Rebuilding system configuration..."
 sudo darwin-rebuild switch --flake .#mimer --impure

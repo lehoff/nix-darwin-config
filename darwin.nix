@@ -8,7 +8,6 @@
 
     #loginShell = "${pkgs.zsh}/bin/zsh -l";
     systemPackages = [
-      pkgs.nodePackages.mermaid-cli
     ];
     systemPath = [
       "~/.asdf/shims"
@@ -64,8 +63,9 @@
       "docker-credential-helper"
       "gemini-cli"
       "scc"
-      "languagetool"
-
+      "typst"
+      "llama.cpp"
+      "mermaid-cli"
     ];
 
     casks = [
@@ -95,6 +95,10 @@
       "cmux"
       "rectangle"
       "anki"
+      "sleek-app"
+      #"nikitabobko/tap/aerospace"
+      "thaw" # bartender alternative
+      "logseq"
 
     ];
     masApps = {

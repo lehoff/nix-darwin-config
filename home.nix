@@ -47,6 +47,7 @@
     davmail
     httpie
     bat
+    pandoc
 
     libossp_uuid
 
@@ -56,7 +57,7 @@
     #terraform
     kind
     kubectl
-    nodePackages.npm
+    nodejs
     imagemagick
 
     fontconfig

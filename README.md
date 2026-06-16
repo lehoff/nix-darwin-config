@@ -66,7 +66,7 @@ Then run:
 
 ```
 nix flake update
-sudo darwin-rebuild switch --flake .#mimer --impure
+./rebuild
 ```
 
 # Update versions (within a release)

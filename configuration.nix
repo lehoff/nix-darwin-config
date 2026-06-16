@@ -20,7 +20,6 @@
     iterm2
     skim
     dash
-    logseq
     inkscape
     #gimp # did not work with 25.11 on Tahoe on 2026-01-13
     #chromedriver
