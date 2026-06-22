@@ -66,6 +66,14 @@
       "typst"
       "llama.cpp"
       "mermaid-cli"
+      # TODO: try these out
+      "mole"
+      "superfile"
+      "carapace"
+      "miller"
+      "difftastic"
+      "kondo"
+      "restic"
     ];
 
     casks = [
