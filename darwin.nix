@@ -58,7 +58,6 @@
       "cloc"
       "podman"
       "podman-compose"
-      "docker"
       #"email-oauth2-proxy"
       "docker-credential-helper"
       "gemini-cli"
@@ -66,6 +65,7 @@
       "typst"
       "llama.cpp"
       "mermaid-cli"
+      "mlx-lm"
       # TODO: try these out
       "mole"
       "superfile"
@@ -74,6 +74,9 @@
       "difftastic"
       "kondo"
       "restic"
+      "squashfs" # for Nerves
+      "mise" # for ash_demystified training
+      "git-who"
     ];
 
     casks = [
@@ -99,6 +102,7 @@
       "macdown-3000"
       "zettlr"
       "languagetool-desktop"
+
       "basictex"
       "cmux"
       "rectangle"
@@ -108,6 +112,13 @@
       "thaw" # bartender alternative
       "logseq"
 
+      "block-goose"
+      "timescribe"
+
+      "signal"
+      "discord"
+      "bitwarden" # cask instead of the outdated Mac App Store build (2024.7.1)
+
     ];
     masApps = {
       Amphetamine = 937984704;
@@ -115,7 +126,6 @@
       Keynote = 409183694;
       Numbers = 409203825;
       Slack = 803453959;
-      Bitwarden = 1352778147;
       Bear = 1091189122;
       ToogleTrack = 1291898086;
     };
@@ -132,7 +142,10 @@
 
       # 2. Reference these from the unstable package set
       zed-editor = final.unstablePkgs.zed-editor;
-      asdf-vm = final.unstablePkgs.asdf-vm;
+      # TODO: re-enable once nixpkgs-unstable ships asdf-vm >= 0.20.2.
+      # Unstable currently pins 0.20.1, whose GitHub tag was withdrawn (source 404s),
+      # so we fall back to stable nixpkgs (0.18.1) for now. (2026-09-24)
+      # asdf-vm = final.unstablePkgs.asdf-vm;
       llm-mux = final.rustPlatform.buildRustPackage rec {
         pname = "llm-mux";
         version = "20260408.0.0"; # taken from https://crates.io/crates/llm-mux

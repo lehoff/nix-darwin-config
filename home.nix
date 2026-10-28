@@ -13,6 +13,10 @@
 
   programs.home-manager.enable = true;
   fonts.fontconfig.enable = true;
+
+  home.activation.installGraphify = config.lib.dag.entryAfter ["writeBoundary"] ''
+    $DRY_RUN_CMD ${pkgs.uv}/bin/uv tool install graphifyy $VERBOSE_ARG
+  '';
   #
 
   home.username = "lehoff"; # Replace with your actual username
@@ -62,17 +66,32 @@
 
     fontconfig
 
-    coreutils # for factor
+    coreutils # for factor and Nerves
 
     skhd # for automation
     yabai
 
+    wxwidgets_3_2 # compat30 build, needed for Erlang's Observer (wx)
+
     google-cloud-sdk
+
+    tmux
+
+    terraform
 
     (writeShellScriptBin "installfonts" ''
       SEARCH_DIR="''${1:-.}"
       ${fd}/bin/fd -t f -e ttf -e otf . "$SEARCH_DIR" | ${parallel}/bin/parallel --verbose cp {} ~/Library/Fonts/
     '')
+
+    # for Nerves
+    fwup
+    #squashfs - moved to homebrew
+    #coreutils - see above
+    xz
+    pkg-config
+
+    # end Nerves
 
   ];
 
@@ -86,7 +105,7 @@
     shellAliases = {
       #plantuml = "/etc/profiles/per-user/lehoff/bin/java -Djava.awt.headless=true -jar /opt/homebrew/Cellar/plantuml/1.2024.6/libexec/plantuml.jar";
       log = "/usr/bin/log";
-      #docker = "/opt/homebrew/bin/podman";
+      docker = "/opt/homebrew/bin/podman";
       cp = "/bin/cp";
     };
 
@@ -142,7 +161,7 @@
     "$HOME/.cache/rebar3/bin" # Added from your original PATH line
     "/opt/homebrew/opt/cyrus-sasl/sbin"
     "/Users/lehoff/.cache/rebar3/bin"
-    "/opt/homebrew/opt/openssl@1.1/bin"
+    "/opt/homebrew/opt/openssl@3/bin"
     "/opt/homebrew/bin"
     "$HOME/.elan/bin"
     "$HOME/.local/bin" # for speckit

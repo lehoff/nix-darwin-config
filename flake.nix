@@ -20,6 +20,14 @@
     # from https://github.com/zhaofengli/nix-homebrew
     nix-homebrew.url = "github:zhaofengli/nix-homebrew";
 
+    # nix-homebrew pins brew 7.0.4, which cannot parse newer homebrew-core
+    # formulae ("undefined method 'new' for an instance of Symbol").
+    brew-src = {
+      url = "github:Homebrew/brew/7.0.11";
+      flake = false;
+    };
+    nix-homebrew.inputs.brew-src.follows = "brew-src";
+
     # Optional: Declarative tap management
     homebrew-core = {
       url = "github:homebrew/homebrew-core";

@@ -15,7 +15,6 @@
     wget
     gtypist
     mas
-    docker
     karabiner-elements
     iterm2
     skim
@@ -24,13 +23,16 @@
     #gimp # did not work with 25.11 on Tahoe on 2026-01-13
     #chromedriver
     maccy
-    openssl
     zed-editor
     nil # Nix LS
     nixd
 
     llm-mux
   ];
+
+  environment.variables = {
+    KERL_CONFIGURE_OPTIONS = "--without-javac --with-ssl=/opt/homebrew/opt/openssl@3 --with-wx-config=/etc/profiles/per-user/lehoff/bin/wx-config";
+  };
 
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";

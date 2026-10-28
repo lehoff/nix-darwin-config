@@ -63,7 +63,6 @@ home-manager.url = "github:nix-community/home-manager/release-26.05";
 ```
 
 Then run:
-
 ```
 nix flake update
 ./rebuild
@@ -91,3 +90,17 @@ nix flake update nixpkgs-unstable
 
 ## Zed
 Remember to run `cli: install binary` inside Zed after each update.
+
+# TODO
+
+## Re-enable asdf-vm from unstable
+asdf-vm is temporarily taken from stable nixpkgs (0.18.1) because nixpkgs-unstable
+pinned 0.20.1, whose GitHub tag was withdrawn (see the TODO in `darwin.nix`).
+After `nix flake update`, check the unstable version:
+
+```
+nix eval --raw --impure --expr '(import (builtins.getFlake (toString ./.)).inputs.nixpkgs-unstable {system="aarch64-darwin";}).asdf-vm.version'
+```
+
+Once it reports 0.20.2 or later, uncomment `asdf-vm = final.unstablePkgs.asdf-vm;` in `darwin.nix`
+and remove this TODO.
