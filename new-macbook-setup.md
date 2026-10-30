@@ -16,11 +16,12 @@ Backup drive: `/Volumes/U/macbook-backup/lehoff` · Backup tooling: `~/backup-ma
 
 - [ ] Check the log ends with `0 warning(s)/error(s)`.
 - [ ] Check what the list does **not** cover: `~/Documents`, `~/Desktop`, `~/Library/Application Support` (except MailMate and logseq), `~/.docker`, `~/cert`, cloud credential dirs. Copy anything you need by hand.
-- [ ] Push unpushed work in every repo under `~/git`.
-- [ ] Push `~/nix-darwin-config` (`git status` should be clean, `git push`).
-- [ ] Sign out of / deauthorize apps with install limits (Dropbox, Bitwarden, etc.).
+- [ ] Optional: push repos under `~/git` that have a remote. The backup already copies `.git`, so this is only a second copy.
+- [ ] Push `~/nix-darwin-config` (`git status` should be clean, `git push`). This one is required, since the new Mac clones it.
+- [ ] Sync Anki to AnkiWeb, and let Dropbox and Google Drive finish syncing.
+- [ ] Find your license keys or emails for licensed apps (AlDente, BetterDisplay, BetterTouchTool, Fork, Nimble Commander, Raycast, etc.).
 - [ ] Note your Mac App Store apps: Amphetamine, Pages, Keynote, Numbers, Slack, Bear, Toggl.
-- [ ] Keep the old Mac usable for about a week after the switch.
+- [ ] Keep the old Mac usable for about a week after the switch. Do not sign out of apps yet.
 
 ---
 
@@ -129,6 +130,23 @@ sudo nix --extra-experimental-features "nix-command flakes" \
 - [ ] Shell, aliases and prompt look right.
 - [ ] Spot-check `~/git`, `~/notes`, `~/.claude`.
 - [ ] Open the apps you use daily.
+
+---
+
+---
+
+## Part 3: Retiring the old Mac (after about a week)
+
+Wiping the Mac clears local app data, but not what services keep on their side (device lists, linked devices, license activations). Clean those up as follows.
+
+- [ ] Run one last backup and confirm the new Mac has everything.
+- [ ] Phone: Signal and WhatsApp > Settings > Linked devices > remove the old Mac.
+- [ ] Deactivate licensed apps that offer it (Settings > License).
+- [ ] Erase the Mac: System Settings > General > Transfer or Reset > Erase All Content and Settings. This signs out of Apple ID and turns off Find My and Activation Lock.
+- [ ] From the web, remove the old Mac from device lists:
+  - Dropbox: dropbox.com > avatar > Settings > Security > Devices
+  - Bitwarden: web vault > Account settings > Security > Devices (hygiene only, no install limit)
+  - Google: myaccount.google.com > Security > Your devices
 
 ---
 
